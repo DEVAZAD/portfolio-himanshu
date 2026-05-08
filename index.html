@@ -2,1636 +2,469 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Himanshu Singh — Full Stack Developer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:ital,wght@0,300;0,400;1,300&display=swap"
-    rel="stylesheet">
-
-  <style>
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box
-    }
-
-    :root {
-      --bone: #F2EDE4;
-      --bone2: #EAE3D8;
-      --bone3: #DED6C9;
-      --ink: #1A1714;
-      --ink2: #3A3530;
-      --muted: #9A8F84;
-      --border: #CFC8BE;
-      --cognac: #B5703A;
-      --cognac2: #C98A52;
-      --cognac-pale: #F5E8D8;
-      --cream: #FAF8F4;
-      --serif: 'Cormorant Garamond', Georgia, serif;
-      --sans: 'Outfit', sans-serif;
-      --mono: 'JetBrains Mono', monospace;
-    }
-
-    html {
-      scroll-behavior: smooth
-    }
-
-    body {
-      background: var(--bone);
-      color: var(--ink);
-      font-family: var(--sans);
-      font-weight: 400;
-      overflow-x: hidden;
-      cursor: none;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* CURSOR */
-    #cur {
-      position: fixed;
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--cognac);
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      mix-blend-mode: multiply;
-      transition: width .2s, height .2s;
-    }
-
-    #cur-o {
-      position: fixed;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 1.5px solid var(--cognac);
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      opacity: .45;
-    }
-
-    body:has(a:hover) #cur {
-      width: 20px;
-      height: 20px;
-      opacity: .6
-    }
-
-    /* NAV */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 500;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.5rem 5vw;
-      transition: background .45s, border-color .45s;
-    }
-
-    nav.stuck {
-      background: rgba(242, 237, 228, .93);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(18px);
-    }
-
-    .logo {
-      font-family: var(--serif);
-      font-size: 1.2rem;
-      font-weight: 600;
-      letter-spacing: .02em;
-      color: var(--ink);
-      text-decoration: none;
-    }
-
-    .logo em {
-      font-style: italic;
-      color: var(--cognac)
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 2.2rem
-    }
-
-    .nav-links a {
-      font-size: .7rem;
-      font-weight: 500;
-      letter-spacing: .13em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color .2s;
-    }
-
-    .nav-links a:hover {
-      color: var(--ink)
-    }
-
-    .open-badge {
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-      font-family: var(--mono);
-      font-size: .6rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      border: 1px solid var(--border);
-      padding: .3rem .8rem;
-    }
-
-    .open-badge::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #4ade80;
-      animation: pulse 2.5s infinite;
-      flex-shrink: 0;
-    }
-
-    @keyframes pulse {
-
-      0%,
-      100% {
-        opacity: 1
-      }
-
-      50% {
-        opacity: .3
-      }
-    }
-
-    /* HERO */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 0 5vw 5vh;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-giant {
-      font-family: var(--serif);
-      font-size: clamp(6rem, 14vw, 15rem);
-      font-weight: 300;
-      line-height: .88;
-      letter-spacing: -.025em;
-      opacity: 0;
-      animation: up .95s .2s cubic-bezier(.23, 1, .32, 1) forwards;
-    }
-
-    .hero-giant .italic-line {
-      font-style: italic;
-      color: var(--cognac);
-      padding-left: clamp(1.5rem, 5vw, 7rem);
-      display: block;
-    }
-
-    .hero-divider {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      padding: 2.2rem 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      margin: 2.5rem 0 2rem;
-      opacity: 0;
-      animation: up .85s .5s cubic-bezier(.23, 1, .32, 1) forwards;
-    }
-
-    .hero-tag {
-      font-family: var(--mono);
-      font-size: .68rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .hero-tag-sep {
-      width: 1px;
-      height: 18px;
-      background: var(--border)
-    }
-
-    .hero-bottom-row {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 2rem;
-      opacity: 0;
-      animation: up .85s .7s cubic-bezier(.23, 1, .32, 1) forwards;
-    }
-
-    .hero-pitch {
-      font-size: clamp(1rem, 1.5vw, 1.25rem);
-      line-height: 1.75;
-      color: var(--ink2);
-      font-weight: 300;
-      max-width: 500px;
-    }
-
-    .hero-pitch strong {
-      font-weight: 500;
-      color: var(--ink)
-    }
-
-    .hero-cta-col {
-      display: flex;
-      flex-direction: column;
-      gap: .9rem;
-      align-items: flex-end
-    }
-
-    .cta-main {
-      display: inline-flex;
-      align-items: center;
-      gap: .65rem;
-      background: var(--ink);
-      color: var(--bone);
-      padding: .9rem 2.2rem;
-      font-size: .78rem;
-      font-weight: 500;
-      letter-spacing: .09em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: background .25s, gap .2s;
-    }
-
-    .cta-main:hover {
-      background: var(--cognac);
-      gap: 1.1rem
-    }
-
-    .cta-link {
-      font-family: var(--mono);
-      font-size: .68rem;
-      letter-spacing: .09em;
-      color: var(--muted);
-      text-decoration: none;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 2px;
-      transition: color .2s, border-color .2s;
-    }
-
-    .cta-link:hover {
-      color: var(--cognac);
-      border-color: var(--cognac)
-    }
-
-    .scroll-cue {
-      position: absolute;
-      right: 5vw;
-      bottom: 5vh;
-      font-family: var(--mono);
-      font-size: .6rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      writing-mode: vertical-rl;
-      display: flex;
-      align-items: center;
-      gap: .8rem;
-      opacity: 0;
-      animation: up .8s 1.2s forwards;
-    }
-
-    .scroll-cue::before {
-      content: '';
-      width: 1px;
-      height: 55px;
-      background: linear-gradient(var(--cognac), transparent);
-    }
-
-    @keyframes up {
-      from {
-        opacity: 0;
-        transform: translateY(32px)
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0)
-      }
-    }
-
-    /* TICKER */
-    .ticker {
-      overflow: hidden;
-      background: var(--ink);
-      border-top: 1px solid rgba(255, 255, 255, .05);
-      border-bottom: 1px solid rgba(255, 255, 255, .05);
-      padding: .85rem 0;
-    }
-
-    .ticker-rail {
-      display: flex;
-      white-space: nowrap;
-      animation: tick 30s linear infinite;
-    }
-
-    .ticker-item {
-      font-family: var(--mono);
-      font-size: .68rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--bone2);
-      padding: 0 2.2rem;
-      border-right: 1px solid rgba(255, 255, 255, .08);
-      display: inline-flex;
-      align-items: center;
-      gap: .6rem;
-      flex-shrink: 0;
-    }
-
-    .ticker-item .dot {
-      color: var(--cognac2);
-      font-size: .55rem
-    }
-
-    @keyframes tick {
-      from {
-        transform: translateX(0)
-      }
-
-      to {
-        transform: translateX(-50%)
-      }
-    }
-
-    /* SECTION SCAFFOLD */
-    .sec {
-      padding: 8rem 5vw
-    }
-
-    .s-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 2.5rem;
-      margin-bottom: 5rem
-    }
-
-    .s-num {
-      font-family: var(--serif);
-      font-size: 5.5rem;
-      font-weight: 300;
-      line-height: 1;
-      color: var(--bone3);
-      flex-shrink: 0;
-      margin-top: -.5rem;
-    }
-
-    .s-titles {}
-
-    .s-eye {
-      font-family: var(--mono);
-      font-size: .65rem;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      color: var(--cognac);
-      display: flex;
-      align-items: center;
-      gap: .65rem;
-      margin-bottom: .55rem;
-    }
-
-    .s-eye::before {
-      content: '';
-      width: 18px;
-      height: 1px;
-      background: var(--cognac)
-    }
-
-    .s-h {
-      font-family: var(--serif);
-      font-size: clamp(2.2rem, 4vw, 3.6rem);
-      font-weight: 400;
-      line-height: 1.08;
-      letter-spacing: -.015em;
-    }
-
-    .s-h em {
-      font-style: italic;
-      color: var(--cognac)
-    }
-
-    /* ABOUT */
-    #about {
-      background: var(--cream)
-    }
-
-    .about-g {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 7rem;
-      align-items: start
-    }
-
-    .a-text p {
-      font-size: .95rem;
-      line-height: 1.85;
-      color: var(--ink2);
-      font-weight: 300;
-      margin-bottom: 1.5rem
-    }
-
-    .a-text p strong {
-      color: var(--ink);
-      font-weight: 500
-    }
-
-    .stats-g {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      margin-top: 2.5rem;
-    }
-
-    .stat-c {
-      background: var(--bone);
-      padding: 1.8rem 1.6rem;
-      transition: background .3s
-    }
-
-    .stat-c:hover {
-      background: var(--cognac-pale)
-    }
-
-    .stat-n {
-      font-family: var(--serif);
-      font-size: 3.2rem;
-      font-weight: 400;
-      line-height: 1;
-      letter-spacing: -.035em;
-      color: var(--ink);
-    }
-
-    .stat-n sup {
-      font-size: 1.1rem;
-      color: var(--cognac)
-    }
-
-    .stat-l {
-      font-family: var(--mono);
-      font-size: .6rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: .45rem;
-    }
-
-    .a-aside {}
-
-    .pullquote {
-      font-family: var(--serif);
-      font-size: clamp(1.4rem, 2.2vw, 2rem);
-      font-weight: 400;
-      font-style: italic;
-      line-height: 1.5;
-      color: var(--ink2);
-      border-left: 3px solid var(--cognac);
-      padding-left: 1.6rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .55rem;
-      margin-bottom: 2.5rem
-    }
-
-    .chip {
-      font-family: var(--mono);
-      font-size: .65rem;
-      letter-spacing: .07em;
-      border: 1px solid var(--border);
-      color: var(--ink2);
-      padding: .3rem .85rem;
-      transition: all .2s;
-      cursor: default;
-    }
-
-    .chip:hover {
-      border-color: var(--cognac);
-      color: var(--cognac);
-      background: var(--cognac-pale)
-    }
-
-    /* SKILLS */
-    #skills {
-      background: var(--bone)
-    }
-
-    .sk-layout {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 5rem;
-      align-items: start
-    }
-
-    .sk-sidebar {
-      position: sticky;
-      top: 8rem
-    }
-
-    .sk-sidebar p {
-      font-size: .9rem;
-      line-height: 1.8;
-      color: var(--muted);
-      font-weight: 300;
-      margin-top: 1.2rem
-    }
-
-    .sk-cats {}
-
-    .sk-row {
-      border-bottom: 1px solid var(--border);
-      padding: 1.8rem 0;
-      cursor: default
-    }
-
-    .sk-row:first-child {
-      border-top: 1px solid var(--border)
-    }
-
-    .sk-row-h {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-
-    .sk-rname {
-      font-family: var(--mono);
-      font-size: .67rem;
-      letter-spacing: .13em;
-      text-transform: uppercase;
-      color: var(--ink)
-    }
-
-    .sk-rcnt {
-      font-family: var(--mono);
-      font-size: .62rem;
-      color: var(--muted)
-    }
-
-    .sk-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .5rem
-    }
-
-    .sk-tag {
-      font-size: .82rem;
-      font-weight: 400;
-      color: var(--ink2);
-      background: var(--bone2);
-      padding: .28rem .8rem;
-      transition: all .2s;
-    }
-
-    .sk-row:hover .sk-tag {
-      background: var(--cognac-pale);
-      color: var(--cognac)
-    }
-
-    /* PROJECTS */
-    #projects {
-      background: var(--ink)
-    }
-
-    #projects .s-num {
-      color: rgba(255, 255, 255, .04)
-    }
-
-    #projects .s-eye {
-      color: var(--cognac2)
-    }
-
-    #projects .s-eye::before {
-      background: var(--cognac2)
-    }
-
-    #projects .s-h {
-      color: var(--bone)
-    }
-
-    .pj-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: rgba(255, 255, 255, .05);
-      border: 1px solid rgba(255, 255, 255, .05);
-    }
-
-    .pj {
-      background: var(--ink2);
-      padding: 2.8rem 2.5rem;
-      position: relative;
-      overflow: hidden;
-      cursor: default;
-      transition: background .4s;
-    }
-
-    .pj::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--cognac);
-      transition: width .45s cubic-bezier(.23, 1, .32, 1);
-    }
-
-    .pj:hover {
-      background: #27231F
-    }
-
-    .pj:hover::after {
-      width: 100%
-    }
-
-    .pj-n {
-      font-family: var(--serif);
-      font-size: 2.8rem;
-      font-weight: 300;
-      color: rgba(255, 255, 255, .06);
-      line-height: 1;
-      margin-bottom: 1.5rem;
-    }
-
-    .pj-badges {
-      display: flex;
-      gap: .5rem;
-      margin-bottom: .9rem;
-      align-items: center
-    }
-
-    .b-built {
-      font-family: var(--mono);
-      font-size: .58rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      padding: .2rem .65rem;
-      background: rgba(181, 112, 58, .15);
-      color: var(--cognac2);
-      border: 1px solid rgba(181, 112, 58, .28);
-    }
-
-    .b-concept {
-      font-family: var(--mono);
-      font-size: .58rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      padding: .2rem .65rem;
-      background: rgba(255, 255, 255, .04);
-      color: rgba(255, 255, 255, .3);
-      border: 1px solid rgba(255, 255, 255, .07);
-    }
-
-    .pj-arr {
-      position: absolute;
-      top: 2rem;
-      right: 2rem;
-      font-size: 1.1rem;
-      color: rgba(255, 255, 255, .12);
-      transition: transform .3s, color .3s;
-    }
-
-    .pj:hover .pj-arr {
-      transform: translate(3px, -3px);
-      color: var(--cognac2)
-    }
-
-    .pj-title {
-      font-family: var(--serif);
-      font-size: clamp(1.4rem, 2.2vw, 2rem);
-      font-weight: 400;
-      color: var(--bone);
-      line-height: 1.2;
-      letter-spacing: -.01em;
-      margin-bottom: .9rem;
-      transition: color .3s;
-    }
-
-    .pj:hover .pj-title {
-      color: var(--cognac2)
-    }
-
-    .pj-desc {
-      font-size: .85rem;
-      line-height: 1.75;
-      color: rgba(255, 255, 255, .38);
-      font-weight: 300;
-      margin-bottom: 1.4rem;
-    }
-
-    .pj-stack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .45rem
-    }
-
-    .stk {
-      font-family: var(--mono);
-      font-size: .6rem;
-      letter-spacing: .07em;
-      color: rgba(255, 255, 255, .3);
-      border: 1px solid rgba(255, 255, 255, .07);
-      padding: .2rem .6rem;
-      transition: all .2s;
-    }
-
-    .pj:hover .stk {
-      color: var(--cognac2);
-      border-color: rgba(181, 112, 58, .22)
-    }
-
-    .pj-footnote {
-      font-family: var(--mono);
-      font-size: .62rem;
-      letter-spacing: .07em;
-      color: rgba(255, 255, 255, .22);
-      margin-top: 2.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, .05);
-    }
-
-    .pj-footnote span {
-      color: var(--cognac2)
-    }
-
-    /* EXPERIENCE */
-    #experience {
-      background: var(--cream)
-    }
-
-    .exp-row {
-      display: grid;
-      grid-template-columns: 230px 1fr;
-      gap: 4rem;
-      padding: 3rem 0;
-      border-bottom: 1px solid var(--border);
-      transition: padding-left .35s;
-    }
-
-    .exp-row:first-of-type {
-      border-top: 1px solid var(--border)
-    }
-
-    .exp-row:hover {
-      padding-left: .9rem
-    }
-
-    .exp-period {
-      font-family: var(--mono);
-      font-size: .65rem;
-      letter-spacing: .1em;
-      color: var(--muted);
-      margin-bottom: .5rem
-    }
-
-    .exp-co {
-      font-family: var(--serif);
-      font-size: .95rem;
-      font-style: italic;
-      color: var(--cognac)
-    }
-
-    .exp-role {
-      font-family: var(--serif);
-      font-size: clamp(1.4rem, 2vw, 1.85rem);
-      font-weight: 400;
-      letter-spacing: -.01em;
-      margin-bottom: 1.2rem;
-      line-height: 1.2;
-    }
-
-    .exp-ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: .6rem
-    }
-
-    .exp-ul li {
-      font-size: .88rem;
-      line-height: 1.75;
-      color: var(--ink2);
-      font-weight: 300;
-      display: flex;
-      gap: .8rem;
-    }
-
-    .exp-ul li::before {
-      content: '—';
-      color: var(--cognac);
-      flex-shrink: 0;
-      font-family: var(--serif)
-    }
-
-    /* EDUCATION */
-    #education {
-      background: var(--bone)
-    }
-
-    .edu-g {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem
-    }
-
-    .edu-c {
-      border: 1px solid var(--border);
-      padding: 2.5rem;
-      background: var(--cream);
-      position: relative;
-      overflow: hidden;
-      transition: border-color .3s, transform .3s;
-    }
-
-    .edu-c::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--cognac);
-      transition: width .4s cubic-bezier(.23, 1, .32, 1);
-    }
-
-    .edu-c:hover {
-      border-color: var(--cognac);
-      transform: translateY(-3px)
-    }
-
-    .edu-c:hover::after {
-      width: 100%
-    }
-
-    .edu-yr {
-      font-family: var(--mono);
-      font-size: .62rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--cognac);
-      margin-bottom: 1.4rem
-    }
-
-    .edu-deg {
-      font-family: var(--serif);
-      font-size: 1.45rem;
-      font-weight: 400;
-      line-height: 1.25;
-      letter-spacing: -.01em;
-      margin-bottom: .5rem
-    }
-
-    .edu-inst {
-      font-size: .85rem;
-      color: var(--muted);
-      font-weight: 300
-    }
-
-    /* CERTS */
-    #certs {
-      background: var(--cream)
-    }
-
-    .cert-list {
-      border-top: 1px solid var(--border)
-    }
-
-    .cert-r {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--border);
-      transition: padding-left .3s;
-      cursor: default;
-    }
-
-    .cert-r:hover {
-      padding-left: .7rem
-    }
-
-    .cert-ico {
-      width: 38px;
-      height: 38px;
-      flex-shrink: 0;
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: .95rem;
-      color: var(--cognac);
-      transition: background .2s, border-color .2s;
-    }
-
-    .cert-r:hover .cert-ico {
-      background: var(--cognac-pale);
-      border-color: var(--cognac)
-    }
-
-    .cert-nm {
-      font-size: .92rem;
-      font-weight: 400;
-      flex: 1
-    }
-
-    .cert-by {
-      font-family: var(--mono);
-      font-size: .65rem;
-      letter-spacing: .08em;
-      color: var(--muted);
-      text-align: right;
-      flex-shrink: 0
-    }
-
-    /* CONTACT */
-    #contact {
-      background: var(--ink);
-      position: relative;
-      overflow: hidden
-    }
-
-    .contact-ghost {
-      position: absolute;
-      bottom: -5rem;
-      right: -3rem;
-      font-family: var(--serif);
-      font-size: clamp(12rem, 24vw, 24rem);
-      font-weight: 300;
-      font-style: italic;
-      color: rgba(255, 255, 255, .018);
-      white-space: nowrap;
-      pointer-events: none;
-      user-select: none;
-      line-height: 1;
-    }
-
-    #contact .s-num {
-      color: rgba(255, 255, 255, .03)
-    }
-
-    #contact .s-eye {
-      color: var(--cognac2)
-    }
-
-    #contact .s-eye::before {
-      background: var(--cognac2)
-    }
-
-    #contact .s-h {
-      color: var(--bone)
-    }
-
-    .ct-rows {
-      position: relative;
-      z-index: 1
-    }
-
-    .ct-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.9rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, .05);
-      text-decoration: none;
-      color: var(--bone);
-      cursor: none;
-      transition: padding-left .35s;
-    }
-
-    .ct-row:first-child {
-      border-top: 1px solid rgba(255, 255, 255, .05)
-    }
-
-    .ct-row:hover {
-      padding-left: 1rem
-    }
-
-    .ct-type {
-      font-family: var(--mono);
-      font-size: .6rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, .28);
-      margin-bottom: .3rem
-    }
-
-    .ct-val {
-      font-family: var(--serif);
-      font-size: clamp(1.1rem, 2vw, 1.85rem);
-      font-weight: 400;
-      transition: color .25s
-    }
-
-    .ct-row:hover .ct-val {
-      color: var(--cognac2)
-    }
-
-    .ct-arr {
-      font-size: 1.3rem;
-      color: rgba(255, 255, 255, .14);
-      transition: transform .3s, color .3s;
-      flex-shrink: 0
-    }
-
-    .ct-row:hover .ct-arr {
-      transform: translate(4px, -4px);
-      color: var(--cognac2)
-    }
-
-    /* FOOTER */
-    footer {
-      background: var(--ink);
-      border-top: 1px solid rgba(255, 255, 255, .05);
-      padding: 1.8rem 5vw;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .f-l {
-      font-family: var(--mono);
-      font-size: .62rem;
-      letter-spacing: .08em;
-      color: rgba(255, 255, 255, .22)
-    }
-
-    .f-r {
-      font-family: var(--serif);
-      font-size: .88rem;
-      font-style: italic;
-      color: rgba(255, 255, 255, .2)
-    }
-
-    /* REVEAL */
-    .rev {
-      opacity: 0;
-      transform: translateY(34px);
-      transition: opacity .85s cubic-bezier(.23, 1, .32, 1), transform .85s cubic-bezier(.23, 1, .32, 1)
-    }
-
-    .rev.on {
-      opacity: 1;
-      transform: none
-    }
-
-    .d1 {
-      transition-delay: .09s
-    }
-
-    .d2 {
-      transition-delay: .18s
-    }
-
-    .d3 {
-      transition-delay: .27s
-    }
-
-    ::selection {
-      background: var(--cognac);
-      color: #fff
-    }
-
-    ::-webkit-scrollbar {
-      width: 3px
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--bone)
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--cognac)
-    }
-
-    @media(max-width:920px) {
-      nav {
-        padding: 1.1rem 5vw
-      }
-
-      .nav-links a,
-      .open-badge {
-        display: none
-      }
-
-      .about-g,
-      .sk-layout,
-      .pj-grid,
-      .edu-g {
-        grid-template-columns: 1fr
-      }
-
-      .sk-sidebar {
-        position: static
-      }
-
-      .exp-row {
-        grid-template-columns: 1fr;
-        gap: 1.2rem
-      }
-
-      .scroll-cue {
-        display: none
-      }
-
-      footer {
-        flex-direction: column;
-        gap: .7rem;
-        text-align: center
-      }
-    }
-  </style>
+  <meta name="description"
+    content="Himanshu Singh — Full Stack Developer specializing in MERN and .NET. Building scalable web applications and REST APIs." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
 </head>
 
 <body>
 
-  <div id="cur"></div>
-  <div id="cur-o"></div>
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
 
   <!-- NAV -->
-  <nav id="nav">
-    <a href="#hero" class="logo">H<em>imanshu</em></a>
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Work</a>
-      <a href="#experience">Experience</a>
-      <a href="#contact">Contact</a>
-    </div>
-    <div class="open-badge">Open to work</div>
+  <nav>
+    <a class="nav-logo" href="#hero">HS<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="nav-cta" href="mailto:Himanshusingh97210@gmail.com">Hire Me</a>
   </nav>
 
   <!-- HERO -->
-  <section id="hero">
-    <div>
-      <h1 class="hero-giant">
-        Himanshu
-        <span class="italic-line">Singh.</span>
-      </h1>
-      <div class="hero-divider">
-        <span class="hero-tag">Full Stack Developer</span>
-        <div class="hero-tag-sep"></div>
-        <span class="hero-tag">MERN &amp; .NET</span>
-        <div class="hero-tag-sep"></div>
-        <span class="hero-tag">CDAC Pune · 2025</span>
+  <section class="hero" id="hero">
+    <div class="hero-bg-glow"></div>
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          Available for opportunities
+        </div>
+        <h1 class="hero-title">
+          <span class="line"><span>Himanshu</span></span>
+          <span class="line"><span>Singh<span class="gradient-text">.</span></span></span>
+          <span class="line"><span style="font-size:clamp(1.4rem,2.5vw,2.2rem);color:#6b6b7a;font-weight:400;"
+              id="typed-role"></span></span>
+        </h1>
+        <p class="hero-sub">Computer Science graduate with a PG Diploma in Advanced Computing. Building scalable web
+          apps with MERN &amp; .NET. Turning complex problems into elegant digital experiences.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#projects">View Projects <span>→</span></a>
+          <a class="btn-outline" href="#contact">Get in Touch</a>
+        </div>
       </div>
-      <div class="hero-bottom-row">
-        <p class="hero-pitch">
-          <strong>Computer Science graduate</strong> building scalable web applications,
-          REST APIs, and cloud-deployed platforms — from society management
-          systems to voice-controlled desktop assistants.
-        </p>
-        <div class="hero-cta-col">
-          <a href="#projects" class="cta-main">View Projects →</a>
-          <a href="mailto:Himanshusingh97210@gmail.com" class="cta-link">Himanshusingh97210@gmail.com</a>
+      <div class="hero-image-wrap">
+        <div class="hero-img-frame">
+          <img src="image.png" alt="Himanshu Singh" />
+          <div class="hero-stats">
+            <div class="stat">
+              <div class="stat-num counter" data-target="8" data-suffix="+">0+</div>
+              <div class="stat-label">Projects</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num counter" data-target="2" data-suffix="y">0y</div>
+              <div class="stat-label">Experience</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num counter" data-target="10" data-suffix="+">0+</div>
+              <div class="stat-label">Tech Stack</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="scroll-cue">Scroll</div>
   </section>
 
-  <!-- TICKER -->
-  <div class="ticker">
-    <div class="ticker-rail">
-      <span class="ticker-item"><span class="dot">◆</span> React.js</span>
-      <span class="ticker-item"><span class="dot">◆</span> Node.js</span>
-      <span class="ticker-item"><span class="dot">◆</span> ASP.NET Core</span>
-      <span class="ticker-item"><span class="dot">◆</span> MongoDB</span>
-      <span class="ticker-item"><span class="dot">◆</span> MS SQL</span>
-      <span class="ticker-item"><span class="dot">◆</span> C# .NET</span>
-      <span class="ticker-item"><span class="dot">◆</span> Python</span>
-      <span class="ticker-item"><span class="dot">◆</span> Docker</span>
-      <span class="ticker-item"><span class="dot">◆</span> Azure</span>
-      <span class="ticker-item"><span class="dot">◆</span> AWS</span>
-      <span class="ticker-item"><span class="dot">◆</span> Redux</span>
-      <span class="ticker-item"><span class="dot">◆</span> JWT Auth</span>
-      <span class="ticker-item"><span class="dot">◆</span> REST APIs</span>
-      <span class="ticker-item"><span class="dot">◆</span> Git</span>
-      <span class="ticker-item"><span class="dot">◆</span> Spring Boot</span>
-      <span class="ticker-item"><span class="dot">◆</span> React.js</span>
-      <span class="ticker-item"><span class="dot">◆</span> Node.js</span>
-      <span class="ticker-item"><span class="dot">◆</span> ASP.NET Core</span>
-      <span class="ticker-item"><span class="dot">◆</span> MongoDB</span>
-      <span class="ticker-item"><span class="dot">◆</span> MS SQL</span>
-      <span class="ticker-item"><span class="dot">◆</span> C# .NET</span>
-      <span class="ticker-item"><span class="dot">◆</span> Python</span>
-      <span class="ticker-item"><span class="dot">◆</span> Docker</span>
-      <span class="ticker-item"><span class="dot">◆</span> Azure</span>
-      <span class="ticker-item"><span class="dot">◆</span> AWS</span>
-      <span class="ticker-item"><span class="dot">◆</span> Redux</span>
-      <span class="ticker-item"><span class="dot">◆</span> JWT Auth</span>
-      <span class="ticker-item"><span class="dot">◆</span> REST APIs</span>
-      <span class="ticker-item"><span class="dot">◆</span> Git</span>
-      <span class="ticker-item"><span class="dot">◆</span> Spring Boot</span>
-    </div>
-  </div>
-
   <!-- ABOUT -->
-  <section id="about" class="sec">
-    <div class="s-header rev">
-      <div class="s-num">01</div>
-      <div class="s-titles">
-        <div class="s-eye">About me</div>
-        <h2 class="s-h">Building things that<br><em>actually</em> work.</h2>
+  <section id="about">
+    <div class="section-header reveal">
+      <div class="section-label">
+        <span class="section-label-text">About Me</span>
+        <span class="section-label-line"></span>
       </div>
+      <h2 class="section-title">Building Things That <span class="gradient-text">Matter</span></h2>
     </div>
-    <div class="about-g">
-      <div class="rev d1">
-        <div class="a-text">
-          <p>I'm a <strong>Computer Science graduate</strong> from IMS Engineering College, Ghaziabad, currently
-            completing a prestigious <strong>PG Diploma in Advanced Computing</strong> at CDAC Pune — one of India's
-            most intensive technical programs.</p>
-          <p>I specialise in full-stack development, building everything from <strong>real-time society management
-              platforms</strong> on Azure to intelligent route-optimisation engines powered by graph algorithms. My
-            stack spans both worlds — the agility of the <strong>MERN ecosystem</strong> and the enterprise reliability
-            of <strong>.NET Core with C#</strong>.</p>
-          <p>I believe great software is invisible — it just works. Every system I build is designed to scale, secured
-            from the ground up, and maintainable for the teams that inherit it.</p>
-        </div>
-        <div class="stats-g">
-          <div class="stat-c">
-            <div class="stat-n">2<sup>+</sup></div>
-            <div class="stat-l">Years coding</div>
-          </div>
-          <div class="stat-c">
-            <div class="stat-n">6<sup>+</sup></div>
-            <div class="stat-l">Projects shipped</div>
-          </div>
-          <div class="stat-c">
-            <div class="stat-n">10<sup>+</sup></div>
-            <div class="stat-l">Tech mastered</div>
-          </div>
-          <div class="stat-c">
-            <div class="stat-n">1<sup>×</sup></div>
-            <div class="stat-l">MERN internship</div>
-          </div>
+    <div class="about-grid">
+      <div class="about-text reveal" data-delay="100">
+        <p>I'm a <strong>Full Stack Developer</strong> with a B.Tech in Computer Science from IMS Engineering College,
+          Ghaziabad and a PG Diploma in Advanced Computing from IET CDAC Pune.</p>
+        <p>My expertise spans the entire web stack — from crafting pixel-perfect <strong>React UIs</strong> to
+          architecting robust <strong>ASP.NET Core APIs</strong> backed by SQL databases. I love turning complex
+          requirements into clean, scalable solutions.</p>
+        <p>Currently pursuing my PG Diploma (Feb 2025 – Aug 2025), deepening my knowledge in advanced computing,
+          distributed systems, and cloud infrastructure.</p>
+        <div class="chips">
+          <span class="chip">React.js</span><span class="chip">Node.js</span><span class="chip">ASP.NET Core</span>
+          <span class="chip">C#</span><span class="chip">Python</span><span class="chip">MongoDB</span>
+          <span class="chip">MSSQL</span><span class="chip">Docker</span><span class="chip">Azure</span><span
+            class="chip">AWS</span>
         </div>
       </div>
-      <div class="rev d2">
-        <p class="pullquote">"A solid foundation in data structures isn't just academic — it shapes every architectural
-          decision I make."</p>
-        <div class="chips">
-          <span class="chip">Problem Solving</span>
-          <span class="chip">System Design</span>
-          <span class="chip">REST APIs</span>
-          <span class="chip">Agile / SDLC</span>
-          <span class="chip">Clean Code</span>
-          <span class="chip">Teamwork</span>
-          <span class="chip">Time Management</span>
-          <span class="chip">Decision-Making</span>
-          <span class="chip">Emotional Intelligence</span>
+      <div class="about-cards reveal" data-delay="200">
+        <div class="info-card">
+          <div class="info-icon">📧</div>
+          <div>
+            <h4>Email</h4>
+            <p>Himanshusingh97210@gmail.com</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">📱</div>
+          <div>
+            <h4>Phone</h4>
+            <p>+91 9721059063</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">🎓</div>
+          <div>
+            <h4>Education</h4>
+            <p>B.Tech CS · PG Diploma in Advanced Computing</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">📍</div>
+          <div>
+            <h4>Location</h4>
+            <p>India · Open to Remote</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">💼</div>
+          <div>
+            <h4>LinkedIn</h4>
+            <p>linkedin.com/in/himanshusingh77</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- SKILLS -->
-  <section id="skills" class="sec">
-    <div class="s-header rev">
-      <div class="s-num">02</div>
-      <div class="s-titles">
-        <div class="s-eye">Stack &amp; Tools</div>
-        <h2 class="s-h">What I <em>work</em><br>with daily.</h2>
+  <section class="skills-section" id="skills">
+    <div class="section-header reveal">
+      <div class="section-label">
+        <span class="section-label-text">Skills</span>
+        <span class="section-label-line"></span>
       </div>
+      <h2 class="section-title">Tech <span class="gradient-text">Arsenal</span></h2>
+      <p class="section-sub">A curated set of tools and technologies I use to build modern, scalable applications.</p>
     </div>
-    <div class="sk-layout">
-      <div class="sk-sidebar rev d1">
-        <p>A curated stack built through real projects and internship experience — from browser to database, from REST
-          to cloud deployment.</p>
+    <div class="skills-grid">
+      <div class="skill-card reveal" data-delay="0">
+        <div class="skill-card-icon">⚛️</div>
+        <h3>Frontend</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">React.js</span><span class="skill-tag">Redux</span>
+          <span class="skill-tag">HTML5</span><span class="skill-tag">CSS3</span>
+          <span class="skill-tag">JavaScript ES6+</span><span class="skill-tag">Bootstrap</span>
+        </div>
       </div>
-      <div class="sk-cats rev d2">
-        <div class="sk-row">
-          <div class="sk-row-h"><span class="sk-rname">Languages</span><span class="sk-rcnt">06</span></div>
-          <div class="sk-tags">
-            <span class="sk-tag">JavaScript ES6+</span>
-            <span class="sk-tag">C# .NET</span>
-            <span class="sk-tag">Python</span>
-            <span class="sk-tag">Java</span>
-            <span class="sk-tag">C++</span>
-            <span class="sk-tag">C</span>
-          </div>
+      <div class="skill-card reveal" data-delay="100">
+        <div class="skill-card-icon">⚙️</div>
+        <h3>Backend</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Node.js</span><span class="skill-tag">Express.js</span>
+          <span class="skill-tag">ASP.NET Core</span><span class="skill-tag">Spring Boot</span>
+          <span class="skill-tag">REST APIs</span><span class="skill-tag">JWT Auth</span>
         </div>
-        <div class="sk-row">
-          <div class="sk-row-h"><span class="sk-rname">Frameworks</span><span class="sk-rcnt">06</span></div>
-          <div class="sk-tags">
-            <span class="sk-tag">React.js</span>
-            <span class="sk-tag">Node.js + Express</span>
-            <span class="sk-tag">Redux</span>
-            <span class="sk-tag">ASP.NET Core</span>
-            <span class="sk-tag">Spring Boot</span>
-            <span class="sk-tag">Bootstrap</span>
-          </div>
+      </div>
+      <div class="skill-card reveal" data-delay="200">
+        <div class="skill-card-icon">🗄️</div>
+        <h3>Databases</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">MongoDB</span><span class="skill-tag">MySQL</span>
+          <span class="skill-tag">MSSQL</span>
         </div>
-        <div class="sk-row">
-          <div class="sk-row-h"><span class="sk-rname">Databases</span><span class="sk-rcnt">03</span></div>
-          <div class="sk-tags">
-            <span class="sk-tag">MongoDB</span>
-            <span class="sk-tag">MySQL</span>
-            <span class="sk-tag">MS SQL Server</span>
-          </div>
+      </div>
+      <div class="skill-card reveal" data-delay="300">
+        <div class="skill-card-icon">☁️</div>
+        <h3>Cloud & DevOps</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">AWS</span><span class="skill-tag">Azure</span>
+          <span class="skill-tag">Docker</span><span class="skill-tag">Linux</span>
+          <span class="skill-tag">Git</span><span class="skill-tag">GitHub</span>
         </div>
-        <div class="sk-row">
-          <div class="sk-row-h"><span class="sk-rname">Cloud &amp; DevOps</span><span class="sk-rcnt">05</span></div>
-          <div class="sk-tags">
-            <span class="sk-tag">Azure</span>
-            <span class="sk-tag">AWS</span>
-            <span class="sk-tag">Docker</span>
-            <span class="sk-tag">Linux</span>
-            <span class="sk-tag">Git / GitHub</span>
-          </div>
+      </div>
+      <div class="skill-card reveal" data-delay="0">
+        <div class="skill-card-icon">💻</div>
+        <h3>Languages</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span><span class="skill-tag">C#</span>
+          <span class="skill-tag">Java</span><span class="skill-tag">C++</span><span class="skill-tag">C</span>
         </div>
-        <div class="sk-row">
-          <div class="sk-row-h"><span class="sk-rname">Frontend</span><span class="sk-rcnt">04</span></div>
-          <div class="sk-tags">
-            <span class="sk-tag">HTML5</span>
-            <span class="sk-tag">CSS3</span>
-            <span class="sk-tag">Responsive Design</span>
-            <span class="sk-tag">REST API Integration</span>
-          </div>
-        </div>
-        <div class="sk-row">
-          <div class="sk-row-h"><span class="sk-rname">Methods &amp; Tools</span><span class="sk-rcnt">06</span></div>
-          <div class="sk-tags">
-            <span class="sk-tag">Agile / SDLC</span>
-            <span class="sk-tag">Selenium</span>
-            <span class="sk-tag">Jira</span>
-            <span class="sk-tag">Postman</span>
-            <span class="sk-tag">Visual Studio 2022</span>
-            <span class="sk-tag">VS Code</span>
-          </div>
+      </div>
+      <div class="skill-card reveal" data-delay="100">
+        <div class="skill-card-icon">🛠️</div>
+        <h3>Tools & Platforms</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">VS Code</span><span class="skill-tag">Visual Studio</span>
+          <span class="skill-tag">Selenium</span><span class="skill-tag">Jira</span>
+          <span class="skill-tag">Eclipse</span><span class="skill-tag">Agile/SDLC</span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- PROJECTS -->
-  <section id="projects" class="sec">
-    <div class="s-header rev">
-      <div class="s-num">03</div>
-      <div class="s-titles">
-        <div class="s-eye">Selected Work</div>
-        <h2 class="s-h">Projects I've <em>built</em><br>&amp; designed.</h2>
+  <section id="projects">
+    <div class="section-header reveal">
+      <div class="section-label">
+        <span class="section-label-text">Projects</span>
+        <span class="section-label-line"></span>
       </div>
+      <h2 class="section-title">Things I've <span class="gradient-text">Built</span></h2>
+      <p class="section-sub">A collection of real-world projects and personal experiments that showcase my range of
+        skills.</p>
     </div>
-    <div class="pj-grid">
+    <div class="projects-grid">
 
-      <div class="pj rev">
-        <div class="pj-n">01</div>
-        <div class="pj-arr">↗</div>
-        <div class="pj-badges"><span class="b-built">Built</span></div>
-        <h3 class="pj-title">Housing Hub</h3>
-        <p class="pj-desc">Full-stack society management platform with wing/flat management, expense allocation, JWT
-          auth, role-based access, real-time complaints, visitor tracking, and amenity booking — deployed on Azure with
-          Docker.</p>
-        <div class="pj-stack">
-          <span class="stk">.NET 8</span><span class="stk">C#</span><span class="stk">React</span>
-          <span class="stk">MS SQL</span><span class="stk">Docker</span><span class="stk">Azure</span><span
-            class="stk">JWT</span>
+      <!-- Housing Hub -->
+      <div class="project-card reveal" data-delay="0">
+        <div class="project-top">
+          <div class="project-emoji">🏘️</div>
+          <div class="project-links">
+            <a class="project-link" title="GitHub" href="#" aria-label="GitHub">⌥</a>
+            <a class="project-link" title="Live" href="#" aria-label="Live Demo">↗</a>
+          </div>
+        </div>
+        <div class="project-body">
+          <h3>Housing Hub</h3>
+          <p>Full-stack society management app with wing/flat management, expense allocation, JWT authentication,
+            role-based access control, and real-time workflows for complaints, visitors, and amenities.</p>
+          <div class="project-techs">
+            <span class="project-tech">.NET 8</span><span class="project-tech">C#</span>
+            <span class="project-tech">React</span><span class="project-tech">MS SQL</span>
+            <span class="project-tech">Docker</span><span class="project-tech">Azure</span>
+          </div>
         </div>
       </div>
 
-      <div class="pj rev d1">
-        <div class="pj-n">02</div>
-        <div class="pj-arr">↗</div>
-        <div class="pj-badges"><span class="b-built">Built</span></div>
-        <h3 class="pj-title">Journey Planner</h3>
-        <p class="pj-desc">Intelligent route optimisation engine computing best routes, shortest paths, and minimum cost
-          across transport networks using classic graph algorithms on real-world Kaggle datasets.</p>
-        <div class="pj-stack">
-          <span class="stk">C++</span><span class="stk">Dijkstra's</span>
-          <span class="stk">BFS</span><span class="stk">Graph Theory</span><span class="stk">Kaggle</span>
+      <!-- Journey Planner -->
+      <div class="project-card reveal" data-delay="100">
+        <div class="project-top">
+          <div class="project-emoji">🗺️</div>
+          <div class="project-links">
+            <a class="project-link" href="#" aria-label="GitHub">⌥</a>
+            <a class="project-link" href="#" aria-label="Live Demo">↗</a>
+          </div>
+        </div>
+        <div class="project-body">
+          <h3>Journey Planner</h3>
+          <p>Intelligent route-finder that computes best routes, shortest paths, and minimum travel costs for any
+            distance using graph traversal algorithms for optimal user experience.</p>
+          <div class="project-techs">
+            <span class="project-tech">C++</span><span class="project-tech">BFS</span>
+            <span class="project-tech">Dijkstra's</span><span class="project-tech">Kaggle</span>
+          </div>
         </div>
       </div>
 
-      <div class="pj rev d2">
-        <div class="pj-n">03</div>
-        <div class="pj-arr">↗</div>
-        <div class="pj-badges"><span class="b-concept">Concept</span></div>
-        <h3 class="pj-title">TaskFlow</h3>
-        <p class="pj-desc">Real-time Agile project management dashboard with drag-and-drop sprint boards, live team
-          collaboration via Socket.io, burndown chart analytics, and role-based workspaces for developers and managers.
-        </p>
-        <div class="pj-stack">
-          <span class="stk">React</span><span class="stk">Redux</span><span class="stk">Node.js</span>
-          <span class="stk">MongoDB</span><span class="stk">Socket.io</span><span class="stk">JWT</span>
+      <!-- Shoe E-Commerce -->
+      <div class="project-card reveal" data-delay="200">
+        <div class="project-top">
+          <div class="project-emoji">👟</div>
+          <div class="project-links">
+            <a class="project-link" href="#" aria-label="GitHub">⌥</a>
+            <a class="project-link" href="#" aria-label="Live Demo">↗</a>
+          </div>
+        </div>
+        <div class="project-body">
+          <h3>E-Commerce for Shoes</h3>
+          <p>Multi-vendor e-commerce platform enabling shoe businesses to create and manage their own storefronts with
+            product listings, cart management, and order tracking.</p>
+          <div class="project-techs">
+            <span class="project-tech">React</span><span class="project-tech">Redux</span>
+            <span class="project-tech">Node.js</span><span class="project-tech">Express</span>
+            <span class="project-tech">MongoDB</span>
+          </div>
         </div>
       </div>
 
-      <div class="pj rev d1">
-        <div class="pj-n">04</div>
-        <div class="pj-arr">↗</div>
-        <div class="pj-badges"><span class="b-built">Built</span></div>
-        <h3 class="pj-title">SoleStore Platform</h3>
-        <p class="pj-desc">Multi-vendor e-commerce platform enabling shoe businesses to create and manage their own
-          digital storefronts — with product catalogues, cart, order management, and admin dashboards. Full MERN stack.
-        </p>
-        <div class="pj-stack">
-          <span class="stk">React</span><span class="stk">Redux</span>
-          <span class="stk">Node.js</span><span class="stk">Express.js</span><span class="stk">MongoDB</span>
+      <!-- Voice Assistant -->
+      <div class="project-card reveal" data-delay="0">
+        <div class="project-top">
+          <div class="project-emoji">🎙️</div>
+          <div class="project-links">
+            <a class="project-link" href="#" aria-label="GitHub">⌥</a>
+            <a class="project-link" href="#" aria-label="Live Demo">↗</a>
+          </div>
+        </div>
+        <div class="project-body">
+          <h3>Virtual Voice Assistant</h3>
+          <p>A private desktop AI assistant inspired by Siri and Google Assistant — handles voice commands, web
+            searches, system tasks, and natural language interactions entirely offline.</p>
+          <div class="project-techs">
+            <span class="project-tech">Python</span><span class="project-tech">NLP</span>
+            <span class="project-tech">Speech Recognition</span><span class="project-tech">pyttsx3</span>
+          </div>
         </div>
       </div>
 
-      <div class="pj rev d2">
-        <div class="pj-n">05</div>
-        <div class="pj-arr">↗</div>
-        <div class="pj-badges"><span class="b-concept">Concept</span></div>
-        <h3 class="pj-title">MediLink API</h3>
-        <p class="pj-desc">RESTful healthcare API enabling secure patient record management, appointment scheduling, and
-          lab report access — with role-based access control, Swagger docs, and Docker containerisation.</p>
-        <div class="pj-stack">
-          <span class="stk">ASP.NET Core</span><span class="stk">C#</span>
-          <span class="stk">MS SQL</span><span class="stk">JWT</span><span class="stk">Swagger</span><span
-            class="stk">Docker</span>
+      <!-- Task Manager API -->
+      <div class="project-card reveal" data-delay="100">
+        <div class="project-top">
+          <div class="project-emoji">📋</div>
+          <div class="project-links">
+            <a class="project-link" href="#" aria-label="GitHub">⌥</a>
+            <a class="project-link" href="#" aria-label="Live Demo">↗</a>
+          </div>
+        </div>
+        <div class="project-body">
+          <h3>Task Manager REST API</h3>
+          <p>Production-grade RESTful API for team task management with user authentication, role-based permissions,
+            real-time status updates, and Swagger documentation. Deployed on AWS.</p>
+          <div class="project-techs">
+            <span class="project-tech">ASP.NET Core</span><span class="project-tech">C#</span>
+            <span class="project-tech">MSSQL</span><span class="project-tech">JWT</span><span
+              class="project-tech">AWS</span>
+          </div>
         </div>
       </div>
 
-      <div class="pj rev d3">
-        <div class="pj-n">06</div>
-        <div class="pj-arr">↗</div>
-        <div class="pj-badges"><span class="b-built">Built</span></div>
-        <h3 class="pj-title">Virtual Voice Assistant</h3>
-        <p class="pj-desc">Private desktop AI assistant — like Siri, but fully local. Handles voice commands for system
-          control, web lookups, reminders, and application launching, entirely without cloud dependency.</p>
-        <div class="pj-stack">
-          <span class="stk">Python</span><span class="stk">Speech Recognition</span>
-          <span class="stk">pyttsx3</span><span class="stk">NLP</span><span class="stk">Automation</span>
+      <!-- Student Portal -->
+      <div class="project-card reveal" data-delay="200">
+        <div class="project-top">
+          <div class="project-emoji">🎓</div>
+          <div class="project-links">
+            <a class="project-link" href="#" aria-label="GitHub">⌥</a>
+            <a class="project-link" href="#" aria-label="Live Demo">↗</a>
+          </div>
+        </div>
+        <div class="project-body">
+          <h3>Student Portal</h3>
+          <p>Comprehensive student management system with attendance tracking, grade management, fee records, and a
+            parent dashboard. Built with a responsive React frontend and Node.js backend.</p>
+          <div class="project-techs">
+            <span class="project-tech">React</span><span class="project-tech">Node.js</span>
+            <span class="project-tech">MySQL</span><span class="project-tech">Bootstrap</span>
+          </div>
         </div>
       </div>
 
     </div>
-    <p class="pj-footnote rev"><span>Built</span> = developed &amp; shipped &nbsp;·&nbsp; <span
-        style="color:rgba(255,255,255,.3)">Concept</span> = fully designed &amp; planned, ready to build</p>
   </section>
 
   <!-- EXPERIENCE -->
-  <section id="experience" class="sec">
-    <div class="s-header rev">
-      <div class="s-num">04</div>
-      <div class="s-titles">
-        <div class="s-eye">Experience</div>
-        <h2 class="s-h">Where I've <em>worked</em>.</h2>
+  <section class="experience-section" id="experience">
+    <div class="section-header reveal">
+      <div class="section-label">
+        <span class="section-label-text">Experience</span>
+        <span class="section-label-line"></span>
       </div>
+      <h2 class="section-title">Work <span class="gradient-text">History</span></h2>
     </div>
-    <div class="exp-row rev d1">
-      <div>
-        <div class="exp-period">July 2023 — August 2023</div>
-        <div class="exp-co">Techno Funnel Infotech Pvt. Ltd.</div>
+    <div class="timeline">
+      <div class="timeline-item reveal" data-delay="0">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-date">Jul 2023 – Aug 2023</span>
+          <span class="timeline-badge">Internship</span>
+        </div>
+        <h3>Full Stack Developer</h3>
+        <h4>Techno Funnel Infotech Pvt. Ltd.</h4>
+        <p>Gained hands-on experience with the full MERN stack — built and integrated React frontends, developed
+          Node.js/Express backends, worked with MongoDB, and collaborated using Git in an Agile team environment.
+          Contributed to real-world client projects from ideation to deployment.</p>
       </div>
-      <div>
-        <div class="exp-role">Full Stack Developer Intern — MERN</div>
-        <ul class="exp-ul">
-          <li>Built production-ready frontend features using React.js with component-driven architecture and global
-            state management via Redux.</li>
-          <li>Designed and implemented RESTful APIs with Node.js + Express.js, using MongoDB as the primary data store.
-          </li>
-          <li>Collaborated in an Agile team with Git/GitHub for version control, regular code reviews, and sprint
-            ceremonies tracked in Jira.</li>
-          <li>Gained real-world experience in professional software development workflows including debugging, testing,
-            and deployment processes.</li>
-        </ul>
+      <div class="timeline-item reveal" data-delay="100">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-date">Feb 2025 – Aug 2025</span>
+          <span class="timeline-badge">Current</span>
+        </div>
+        <h3>PG Diploma Trainee</h3>
+        <h4>IET CDAC Pune</h4>
+        <p>Advanced coursework in computing systems, cloud architecture, distributed computing, and enterprise software
+          development. Building expertise in cutting-edge technologies with a focus on real-world application.</p>
       </div>
     </div>
   </section>
 
   <!-- EDUCATION -->
-  <section id="education" class="sec">
-    <div class="s-header rev">
-      <div class="s-num">05</div>
-      <div class="s-titles">
-        <div class="s-eye">Education</div>
-        <h2 class="s-h">Academic <em>foundations</em>.</h2>
+  <section id="education">
+    <div class="section-header reveal">
+      <div class="section-label">
+        <span class="section-label-text">Education</span>
+        <span class="section-label-line"></span>
       </div>
+      <h2 class="section-title">Academic <span class="gradient-text">Background</span></h2>
     </div>
-    <div class="edu-g">
-      <div class="edu-c rev d1">
-        <div class="edu-yr">Feb 2025 — Aug 2025</div>
-        <div class="edu-deg">PG Diploma in Advanced Computing</div>
-        <div class="edu-inst">IET CDAC Pune</div>
+    <div class="edu-grid">
+      <div class="edu-card reveal" data-delay="0">
+        <div class="edu-year">2020 – 2024</div>
+        <h3>Bachelor of Technology — Computer Science</h3>
+        <h4>IMS Engineering College, Ghaziabad</h4>
       </div>
-      <div class="edu-c rev d2">
-        <div class="edu-yr">Graduated July 2024</div>
-        <div class="edu-deg">B.Tech — Computer Science &amp; Engineering</div>
-        <div class="edu-inst">IMS Engineering College, Ghaziabad</div>
+      <div class="edu-card reveal" data-delay="100">
+        <div class="edu-year">Feb 2025 – Aug 2025</div>
+        <h3>PG Diploma in Advanced Computing</h3>
+        <h4>IET CDAC, Pune</h4>
       </div>
     </div>
   </section>
 
   <!-- CERTIFICATIONS -->
-  <section id="certs" class="sec">
-    <div class="s-header rev">
-      <div class="s-num">06</div>
-      <div class="s-titles">
-        <div class="s-eye">Certifications</div>
-        <h2 class="s-h">Learning, <em>verified</em>.</h2>
+  <section class="certs-section" id="certifications">
+    <div class="section-header reveal">
+      <div class="section-label">
+        <span class="section-label-text">Certifications</span>
+        <span class="section-label-line"></span>
       </div>
+      <h2 class="section-title">Certificates &amp; <span class="gradient-text">Achievements</span></h2>
     </div>
-    <div class="cert-list">
-      <div class="cert-r rev">
-        <div class="cert-ico">Py</div>
-        <div class="cert-nm">Programming for Everybody — Getting Started with Python</div>
-        <div class="cert-by">Coursera · University of Michigan</div>
+    <div class="certs-grid">
+      <div class="cert-card reveal" data-delay="0">
+        <div class="cert-icon">🐍</div>
+        <div>
+          <h4>Programming for Everybody (Python)</h4>
+          <p>Coursera · University of Michigan</p>
+        </div>
       </div>
-      <div class="cert-r rev d1">
-        <div class="cert-ico">DS</div>
-        <div class="cert-nm">Data Structures &amp; Algorithms</div>
-        <div class="cert-by">Coding Ninjas</div>
+      <div class="cert-card reveal" data-delay="100">
+        <div class="cert-icon">🧮</div>
+        <div>
+          <h4>Data Structures &amp; Algorithms</h4>
+          <p>Coding Ninjas</p>
+        </div>
       </div>
-      <div class="cert-r rev d2">
-        <div class="cert-ico">Es</div>
-        <div class="cert-nm">Employability Skills Training — 80 Hours</div>
-        <div class="cert-by">TPC Global</div>
+      <div class="cert-card reveal" data-delay="200">
+        <div class="cert-icon">💼</div>
+        <div>
+          <h4>Employability Skills Training</h4>
+          <p>TPC Global · 80-Hour Program</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="sec">
-    <div class="contact-ghost">Hello.</div>
-    <div class="s-header rev">
-      <div class="s-num">07</div>
-      <div class="s-titles">
-        <div class="s-eye">Get in touch</div>
-        <h2 class="s-h">Let's build something<br><em>great</em> together.</h2>
+  <section id="contact">
+    <div class="contact-inner reveal">
+      <div class="section-label" style="justify-content:center;">
+        <span class="section-label-text">Contact</span>
+        <span class="section-label-line"></span>
       </div>
-    </div>
-    <div class="ct-rows">
-      <a href="mailto:Himanshusingh97210@gmail.com" class="ct-row rev">
-        <div>
-          <div class="ct-type">Email</div>
-          <div class="ct-val">Himanshusingh97210@gmail.com</div>
-        </div>
-        <span class="ct-arr">↗</span>
-      </a>
-      <a href="tel:+919721059063" class="ct-row rev d1">
-        <div>
-          <div class="ct-type">Phone</div>
-          <div class="ct-val">+91 97210 59063</div>
-        </div>
-        <span class="ct-arr">↗</span>
-      </a>
-      <a href="https://www.linkedin.com/in/himanshusingh77" target="_blank" class="ct-row rev d2">
-        <div>
-          <div class="ct-type">LinkedIn</div>
-          <div class="ct-val">linkedin.com/in/himanshusingh77</div>
-        </div>
-        <span class="ct-arr">↗</span>
-      </a>
+      <h2 class="section-title">Let's <span class="gradient-text">Work Together</span></h2>
+      <p class="section-sub" style="margin:0 auto;">Whether you have a project in mind, a role to fill, or just want to
+        connect — my inbox is always open.</p>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:Himanshusingh97210@gmail.com">
+          <span>✉️</span> Himanshusingh97210@gmail.com
+        </a>
+        <a class="contact-link" href="https://www.linkedin.com/in/himanshusingh77" target="_blank">
+          <span>🔗</span> LinkedIn
+        </a>
+        <a class="contact-link" href="tel:+919721059063">
+          <span>📞</span> +91 97210 59063
+        </a>
+      </div>
     </div>
   </section>
 
   <footer>
-    <div class="f-l">© 2025 Himanshu Singh — All rights reserved</div>
-    <div class="f-r">Open to full-time roles &amp; freelance</div>
+    <p>Designed &amp; Built by <strong>Himanshu Singh</strong> · 2025</p>
   </footer>
 
-  <script>
-    /* cursor */
-    const cur = document.getElementById('cur'), co = document.getElementById('cur-o');
-    let mx = 0, my = 0, tx = 0, ty = 0;
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      cur.style.left = mx + 'px'; cur.style.top = my + 'px';
-    });
-    (function loop() {
-      tx += (mx - tx) * .11; ty += (my - ty) * .11;
-      co.style.left = tx + 'px'; co.style.top = ty + 'px';
-      requestAnimationFrame(loop);
-    })();
-
-    /* nav */
-    const nav = document.getElementById('nav');
-    addEventListener('scroll', () => nav.classList.toggle('stuck', scrollY > 70));
-
-    /* reveal */
-    const io = new IntersectionObserver(es => {
-      es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target) } })
-    }, { threshold: .08 });
-    document.querySelectorAll('.rev').forEach(el => io.observe(el));
-  </script>
+  <script src="script.js"></script>
 </body>
 
 </html>
